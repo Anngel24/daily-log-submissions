@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Work Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #f4f4f5;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 500px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .lang-toggle {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .lang-toggle button {
+        margin: 0 5px;
+        padding: 8px 16px;
+        border: none;
+        background-color: #2563eb;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 8px;
+      }
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: 600;
+      }
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+      button[type="submit"] {
+        margin-top: 20px;
+        background-color: #22c55e;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="form-title">SUPREME BUILDS - DAILY WORK LOG</h1>
+      <div class="lang-toggle">
+        <button onclick="toggleLang('en')">English</button>
+        <button onclick="toggleLang('es')">Español</button>
+      </div>
+      <form method="POST" action="https://hook.us1.make.com/your-n8n-webhook-url">
+        <div id="form-en">
+          <label>Full Name</label>
+          <input type="text" name="name" required />
+          <label>Project Name</label>
+          <input type="text" name="project" required />
+          <label>Time In</label>
+          <input type="time" name="time_in" required />
+          <label>Time Out</label>
+          <input type="time" name="time_out" required />
+          <label>Tasks Completed</label>
+          <textarea name="tasks" rows="3" required></textarea>
+          <label>Delays / Problems / Missing Materials</label>
+          <textarea name="issues" rows="2"></textarea>
+          <button type="submit">Submit</button>
+        </div>
+        <div id="form-es" style="display:none;">
+          <label>Nombre completo</label>
+          <input type="text" name="name" required />
+          <label>Nombre del proyecto</label>
+          <input type="text" name="project" required />
+          <label>Hora de entrada</label>
+          <input type="time" name="time_in" required />
+          <label>Hora de salida</label>
+          <input type="time" name="time_out" required />
+          <label>Tareas completadas</label>
+          <textarea name="tasks" rows="3" required></textarea>
+          <label>Problemas / Demoras / Materiales faltantes</label>
+          <textarea name="issues" rows="2"></textarea>
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function toggleLang(lang) {
+        if (lang === 'en') {
+          document.getElementById('form-en').style.display = 'block';
+          document.getElementById('form-es').style.display = 'none';
+          document.getElementById('form-title').innerText = 'SUPREME BUILDS - DAILY WORK LOG';
+        } else {
+          document.getElementById('form-en').style.display = 'none';
+          document.getElementById('form-es').style.display = 'block';
+          document.getElementById('form-title').innerText = 'SUPREME BUILDS - REGISTRO DIARIO DE TRABAJO';
+        }
+      }
+    </script>
+  </body>
+</html>
