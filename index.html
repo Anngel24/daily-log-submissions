@@ -7,9 +7,7 @@
     <title>Daily Work Log</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
       body {
         font-family: 'Inter', sans-serif;
         background: #f4f4f5;
@@ -28,21 +26,6 @@
         text-align: center;
         margin-bottom: 20px;
       }
-      .lang-toggle {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-      .lang-toggle button {
-        margin: 0 5px;
-        padding: 8px 16px;
-        border: none;
-        background-color: #2563eb;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 8px;
-      }
       label {
         display: block;
         margin-top: 15px;
@@ -56,7 +39,7 @@
         border: 1px solid #ccc;
         font-size: 16px;
       }
-      <button type="submit">Submit</button>
+      button[type="submit"] {
         margin-top: 20px;
         background-color: #22c55e;
         color: white;
@@ -73,75 +56,50 @@
   <body>
     <div class="container">
       <h1 id="form-title">SUPREME BUILDS - DAILY WORK LOG</h1>
-      <div class="lang-toggle">
-        <button onclick="toggleLang('en')">English</button>
-        <button onclick="toggleLang('es')">Español</button>
-      </div>
-      <form <form method="POST" action="https://your-n8n-domain.com/webhook/daily-log">
-        <div id="form-en">
-          <label>Full Name</label>
-          <input type="text" name="name" required />
-          <label>Project Name</label>
-          <input type="text" name="project" required />
-          <label>Time In</label>
-          <input type="time" name="time_in" required />
-          <label>Time Out</label>
-          <input type="time" name="time_out" required />
-          <label>Tasks Completed</label>
-          <textarea name="tasks" rows="3" required></textarea>
-          <label>Delays / Problems / Missing Materials</label>
-          <textarea name="issues" rows="2"></textarea>
-          <button type="submit">Submit</button>
-        </div>
-        <div id="form-es" style="display:none;">
-          <label>Nombre completo</label>
-          <input type="text" name="name" required />
-          <label>Nombre del proyecto</label>
-          <input type="text" name="project" required />
-          <label>Hora de entrada</label>
-          <input type="time" name="time_in" required />
-          <label>Hora de salida</label>
-          <input type="time" name="time_out" required />
-          <label>Tareas completadas</label>
-          <textarea name="tasks" rows="3" required></textarea>
-          <label>Problemas / Demoras / Materiales faltantes</label>
-          <textarea name="issues" rows="2"></textarea>
-          <button type="submit">Enviar</button>
-        </div>
+
+      <form method="POST" action="https://admin-supreme.app.n8n.cloud/webhook/daily-log">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" required />
+
+        <label for="project">Project Name</label>
+        <input type="text" name="project" required />
+
+        <label for="time_in">Time In</label>
+        <input type="time" name="time_in" required />
+
+        <label for="time_out">Time Out</label>
+        <input type="time" name="time_out" required />
+
+        <label for="tasks">Tasks Completed</label>
+        <textarea name="tasks" rows="3" required></textarea>
+
+        <label for="issues">Delays / Problems / Missing Materials</label>
+        <textarea name="issues" rows="2"></textarea>
+
+        <button type="submit">Submit</button>
       </form>
+
+      <div id="confirmation" style="display:none; text-align:center; margin-top:20px; font-weight:bold; color:green;">
+        ✅ Submission received! Thank you.
+      </div>
     </div>
+
     <script>
-      function toggleLang(lang) {
-        if (lang === 'en') {
-          document.getElementById('form-en').style.display = 'block';
-          document.getElementById('form-es').style.display = 'none';
-          document.getElementById('form-title').innerText = 'SUPREME BUILDS - DAILY WORK LOG';
-        } else {
-          document.getElementById('form-en').style.display = 'none';
-          document.getElementById('form-es').style.display = 'block';
-          document.getElementById('form-title').innerText = 'SUPREME BUILDS - REGISTRO DIARIO DE TRABAJO';
-        }
-      }
+      document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // stop form from reloading
+        const form = this;
+        fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+        }).then(response => {
+          if (response.ok) {
+            form.style.display = "none"; // hide form after submit
+            document.getElementById("confirmation").style.display = "block"; // show thank-you message
+          } else {
+            alert("Something went wrong. Try again.");
+          }
+        }).catch(err => alert("Network error. Please retry."));
+      });
     </script>
-    <div id="confirmation" style="display:none; text-align:center; margin-top:20px; font-weight:bold; color:green;">
-  ✅ Submission received! Thank you.
-</div>
-<script>
-  document.querySelector("form").addEventListener("submit", function (e) {
-    e.preventDefault(); // stop form from reloading
-    const form = this;
-    fetch(form.action, {
-      method: "POST",
-      body: new FormData(form),
-    }).then(response => {
-      if (response.ok) {
-        form.style.display = "none"; // hide form after submit
-        document.getElementById("confirmation").style.display = "block"; // show thank-you message
-      } else {
-        alert("Something went wrong. Try again.");
-      }
-    }).catch(err => alert("Network error. Please retry."));
-  });
-</script>
   </body>
 </html>
